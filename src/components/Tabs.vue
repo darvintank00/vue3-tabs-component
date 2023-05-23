@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import expiringStorage from "../expiringStorage"
-import { defineExpose, onMounted, provide, reactive, toRefs } from "vue"
+import { onMounted, provide, reactive, toRefs } from "vue"
 import { Tab, TabsState } from "../types"
 import { AddTabKey, UpdateTabKey, DeleteTabKey, TabsProviderKey } from "../symbols"
 

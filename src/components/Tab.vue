@@ -13,57 +13,62 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineExpose, onBeforeMount, onBeforeUnmount, ref, watch } from "vue"
-import { TabsProviderKey, AddTabKey, UpdateTabKey, DeleteTabKey } from "../symbols"
-import { injectStrict } from "../utils"
+import { computed, onBeforeMount, onBeforeUnmount, ref, watch } from "vue";
+import {
+  TabsProviderKey,
+  AddTabKey,
+  UpdateTabKey,
+  DeleteTabKey,
+} from "../symbols";
+import { injectStrict } from "../utils";
 
 const props = defineProps({
   panelClass: {
     type: String,
-    default: "tabs-component-panel"
+    default: "tabs-component-panel",
   },
   id: {
     type: String,
-    default: null
+    default: null,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   prefix: {
     type: String,
-    default: ""
+    default: "",
   },
   suffix: {
     type: String,
-    default: ""
+    default: "",
   },
   isDisabled: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
-const isActive = ref(false)
+const isActive = ref(false);
 
-const tabsProvider = injectStrict(TabsProviderKey)
-const addTab = injectStrict(AddTabKey)
-const updateTab = injectStrict(UpdateTabKey)
-const deleteTab = injectStrict(DeleteTabKey)
+const tabsProvider = injectStrict(TabsProviderKey);
+const addTab = injectStrict(AddTabKey);
+const updateTab = injectStrict(UpdateTabKey);
+const deleteTab = injectStrict(DeleteTabKey);
 
-const header = props.prefix + props.name + props.suffix
+const header = props.prefix + props.name + props.suffix;
 const computedId = props.id
   ? props.id
-  : props.name.toLowerCase().replace(/ /g, "-")
-const paneId = computedId + "-pane"
-const hash = computed(() => "#" + (!props.isDisabled ? computedId : ""))
+  : props.name.toLowerCase().replace(/ /g, "-");
+const paneId = computedId + "-pane";
+const hash = computed(() => "#" + (!props.isDisabled ? computedId : ""));
 
 watch(
   () => tabsProvider.activeTabHash,
   () => {
-    isActive.value = hash.value === tabsProvider.activeTabHash
+    isActive.value = hash.value === tabsProvider.activeTabHash;
   }
-)
+);
 
 watch(
   () => Object.assign({}, props),
@@ -75,10 +80,10 @@ watch(
       hash: hash.value,
       index: tabsProvider.tabs.length,
       computedId: computedId,
-      paneId: paneId
-    })
+      paneId: paneId,
+    });
   }
-)
+);
 
 onBeforeMount(() => {
   addTab({
@@ -88,19 +93,19 @@ onBeforeMount(() => {
     hash: hash.value,
     index: tabsProvider.tabs.length,
     computedId: computedId,
-    paneId: paneId
-  })
-})
+    paneId: paneId,
+  });
+});
 
 onBeforeUnmount(() => {
-  deleteTab(computedId)
-})
+  deleteTab(computedId);
+});
 
 defineExpose({
   header,
   computedId,
   paneId,
   hash,
-  isActive
-})
+  isActive,
+});
 </script>
