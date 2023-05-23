@@ -6,7 +6,7 @@ function f(s, c) {
     throw new Error(`Could not resolve ${s.description}`);
   return a;
 }
-const F = ["data-tab-id", "aria-hidden"], P = I({
+const F = ["data-tab-id", "aria-hidden"], P = /* @__PURE__ */ I({
   __name: "Tab",
   props: {
     panelClass: {
@@ -92,14 +92,14 @@ class q {
     if (a === null)
       return null;
     const i = JSON.parse(a);
-    return i ? new Date(i.expires) < new Date() ? (localStorage.removeItem(c), null) : i.value : null;
+    return i ? new Date(i.expires) < /* @__PURE__ */ new Date() ? (localStorage.removeItem(c), null) : i.value : null;
   }
   set(c, a, i) {
-    const t = new Date().getTime(), o = new Date(t + i * 6e4);
+    const t = (/* @__PURE__ */ new Date()).getTime(), o = new Date(t + i * 6e4);
     localStorage.setItem(c, JSON.stringify({ value: a, expires: o }));
   }
 }
-const T = new q(), J = ["aria-controls", "aria-selected", "href", "onClick", "innerHTML"], W = I({
+const T = new q(), J = ["aria-controls", "aria-selected", "href", "onClick", "innerHTML"], W = /* @__PURE__ */ I({
   __name: "Tabs",
   props: {
     cacheLifetime: {
@@ -196,7 +196,7 @@ const T = new q(), J = ["aria-controls", "aria-selected", "href", "onClick", "in
       T.set(r, e.hash, i.cacheLifetime);
     }, u = (l) => t.tabs.find((n) => n.hash === l);
     return M(() => {
-      if (!!t.tabs.length) {
+      if (t.tabs.length) {
         if (window.addEventListener("hashchange", () => o(window.location.hash)), u(window.location.hash)) {
           o(window.location.hash);
           return;
